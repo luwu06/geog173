@@ -33,4 +33,4 @@ From A_new and H_new we can get a new volume of water (V_new)
 
 We then compare the original volume and the the new volume
               Y = V - V_new
-we want Y to be 0 because that means the volume of water leaving the lake and entering the basin are the same. If Y is not zero we run it again using our new A value until we get close to zero.
+we want Y to be 0 because that means the volume of water leaving the lake and entering the basin are the same. If Y is not zero we run it again using our new H value until we get close to zero.
