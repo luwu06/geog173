@@ -1,6 +1,7 @@
 Geography 173 Final Project
 =======
 PROGRESS REPORT
+=======
 Tibet Basin/Watershed:
 
 Requires 3 user inputs:
@@ -61,6 +62,7 @@ Do raster to polygon conversion using accurate reclassified DEM
 
 This is the shapefile for the flood extent: 
   Append water volume by polygon part to the shapefile
+Description
 =======
 We are essentially taking the volume of water in a lake and pouring it in to a basin and seeing where it goes. 
 
