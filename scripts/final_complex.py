@@ -116,3 +116,79 @@ arcpy.SelectLayerByAttribute(area_shapefile, "NEW_SELECTION", ' "GRIDCODE" = 0 '
 arcpy.CopyFeatures_management(area_shapefile, selected_area_shapefile_path)
 
 #APPEND FIELDS & ATTRIBUTE DATA TO EXPORTED SHAPEFILE
+
+#PRODUCE A MAP BOOK
+
+import os
+
+mxd = arcpy.mapping.MapDocument(folder_path + "file_name.mxd")
+data_frame = arcpy.mapping.ListDataFrames(mxd)[0]
+list_layers = arcpy.mapping.ListLayers(mxd,"", data_frame)
+
+#Final and temporary pdf set up
+
+finalPDF_filename = folder_path + "/file_name.pdf"
+
+if os.path.exists(finalPDF_filename):
+    os.remove(finalPDF_filename)
+
+finalPDF = arcpy.mapping.PDFDocumentCreate(finalPDF_filename)
+
+tempPDF = folder_path+"/temp.pdf"
+
+#Title page with names
+#We can save the mxd orginally with all of the layers turned off and the title we'd like. OR:
+
+for lyr in list_layers:
+	lyr.visible = False
+	arcpy.RefreshActiveView()
+
+element = arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT")[0]
+element.text = "Title and our names here"
+
+mxd.save()
+
+if os.path.exists(tempPDF):
+    os.remove(tempPDF)
+    
+arcpy.mapping.ExportToPDF(mxd,tempPDF)
+finalPDF.appendPages(tempPDF)
+
+if os.path.exists(tempPDF):
+    os.remove(tempPDF)
+
+#Reclassified DEM
+
+#Turn on the reclassified DEM
+
+data_frame = arcpy.mapping.ListDataFrames(mxd)[0]
+
+for lyr in list_layers:
+	if lyr.isRasterLayer = True:
+		lyr.visible = True
+	arcpy.RefreshActiveView()
+
+element = arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT")[0]
+element.text = "Title of this page"
+
+mxd.save()
+
+if os.path.exists(tempPDF):
+    os.remove(tempPDF)
+    
+arcpy.mapping.ExportToPDF(mxd,tempPDF)
+finalPDF.appendPages(tempPDF)
+
+#Polygon shapefile
+
+data_frame = arcpy.mapping.ListDataFrames(mxd)[0]
+
+for lyr in list_layers:
+	if lyr.isFeatureLayer = True:
+		lyr.visible = True
+	arcpy.RefreshActiveView()
+
+element = arcpy.mapping.ListLayoutElements(mxd, "TEXT_ELEMENT")[0]
+element.text = "Title of this page"
+
+#Repeat for any additional pages we want. We can also index layers if we want to do more than one shapefile or raster.
